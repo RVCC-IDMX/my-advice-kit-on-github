@@ -1,0 +1,7 @@
+# Files and folders Prettier should NOT format.
+# Without this, running "npm run format" would rewrite your markdown docs,
+# which can break intentional formatting like code examples.
+
+*.md
+docs/
+reports/

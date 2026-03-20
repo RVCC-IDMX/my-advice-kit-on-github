@@ -1,0 +1,7 @@
+# Files that are not markdown but use # for comments.
+# The markdown linter misreads these as broken headings.
+
+.husky/
+.prettierignore
+.gitignore
+src/**/.gitkeep

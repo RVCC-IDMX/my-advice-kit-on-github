@@ -1,0 +1,9 @@
+{
+  "specstory.cloudSync.enabled": "never",
+  "markdownlint.ignore": [
+    ".husky/**",
+    ".prettierignore",
+    ".gitignore",
+    "src/**/.gitkeep"
+  ]
+}

@@ -1,0 +1,32 @@
+# This workflow runs ESLint on every push and pull request.
+# It is a CI (Continuous Integration) check — if linting fails,
+# you will see a red X on your commit in the GitHub Actions tab.
+# See docs/tutorials/github-actions-101.md for how to read the results.
+
+name: Lint check
+
+# When to run: on every push to any branch, and on every pull request.
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: ['**']
+
+jobs:
+  lint:
+    # Run on a fresh Ubuntu server provided by GitHub.
+    runs-on: ubuntu-latest
+    steps:
+      # Check out your repo's code onto the server.
+      - uses: actions/checkout@v4
+
+      # Install Node.js (same version the class uses).
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Install dependencies (same as running npm install locally).
+      - run: npm install
+
+      # Run the linter. If this fails, the workflow fails.
+      - run: npm run lint

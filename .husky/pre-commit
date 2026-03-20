@@ -1,0 +1,6 @@
+# This hook runs automatically before every git commit.
+# It calls lint-staged, which checks only the files you are committing
+# (not the whole project). If linting fails, the commit is blocked.
+# See docs/tutorials/how-husky-works.md for details.
+
+npx lint-staged
