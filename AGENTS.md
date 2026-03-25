@@ -60,4 +60,21 @@ src/css/style.css    ← all styles
 
 ## My personal instructions
 
-_(Add your own here — what helps you learn, what you want the agent to always or never do, context about your project.)_
+
+1. When explaining a new concept, give a short analogy or real-world example before showing code.
+2. If I make a mistake, explain what was wrong and point me to the relevant doc in docs/ or a specific file in my repo.
+3. I learn best with step-by-step explanations and short, runnable code snippets—not long blocks of code.
+
+# Reflection-based instructions
+
+- What did the agent do well that you want it to keep doing?
+	- Keep referencing specific files and functions from my repo when answering questions.
+
+- What did the agent do that was unhelpful?
+	- Avoid giving generic advice that could apply to any project—always connect your answer to my actual codebase.
+
+- How do you learn best — analogies, short examples, step-by-step?
+	- I learn best when you use analogies and break things down into small, clear steps, with runnable code snippets.
+
+- Any design or code preferences specific to your project?
+	- Follow the code and accessibility rules in AGENTS.md and docs/. Use semantic HTML, CSS variables, and keep logic and DOM separate as in the project structure.

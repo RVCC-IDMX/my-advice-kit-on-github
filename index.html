@@ -8,15 +8,58 @@
   </head>
   <body>
     <header>
-      <h1>My advice</h1>
+      <h1>What Should I Watch?</h1>
+      <p>Find the perfect movie for any mood or occasion!</p>
     </header>
 
     <main>
-      <p id="message"></p>
+      <section aria-labelledby="movie-form-title">
+        <h2 id="movie-form-title">Get Your Movie Recommendation</h2>
+        <form id="movie-form">
+          <div class="form-group">
+            <label for="mood">Mood</label>
+            <select id="mood" name="mood">
+              <option value="">Any</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="category">Genre</label>
+            <select id="category" name="category">
+              <option value="">Any</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="energy">Energy</label>
+            <select id="energy" name="energy">
+              <option value="">Any</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="era">Era</label>
+            <select id="era" name="era">
+              <option value="">Any</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="time">Time</label>
+            <select id="time" name="time">
+              <option value="">Any length</option>
+              <option value="90">Up to 90 min</option>
+              <option value="120">Up to 2 hours</option>
+              <option value="999">Over 2 hours</option>
+            </select>
+          </div>
+          <button type="submit">Find Movies</button>
+        </form>
+      </section>
+      <section aria-labelledby="results-title">
+        <h2 id="results-title">Recommendations</h2>
+        <div id="results" class="results"></div>
+      </section>
     </main>
 
     <footer>
-      <p>&copy; 2026</p>
+      <p>&copy; 2026 What Should I Watch?</p>
     </footer>
 
     <script type="module" src="/src/js/app.js"></script>
