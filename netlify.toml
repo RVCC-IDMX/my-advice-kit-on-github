@@ -1,21 +1,16 @@
-# Netlify reads this file to know how to build and deploy your site.
-# See docs/tutorials/project-structure.md for how this fits into the build pipeline.
+# Netlify configuration for static site deployment
+# This file tells Netlify how to deploy your project
 
 [build]
-  # The command Netlify runs on its servers to produce your site.
-  # This calls "vite build", which bundles your code into dist/.
-  command = "npm run build"
+  # No build command needed - we're serving static files
+  command = ""
 
-  # The folder Netlify uploads to its CDN.
-  # Only files inside this folder are deployed — everything else stays behind.
-  # Your docs/, reports/, AGENTS.md, and config files never reach the server.
-  publish = "dist"
+  # Publish the root directory
+  publish = "."
 
-  # Skip rebuilding when only non-site files changed (docs, config, markdown).
-  # Netlify runs this command — if it exits 0 (no diff), the build is skipped.
-  # This saves build minutes and avoids unnecessary deploys.
-  ignore = "git diff --quiet HEAD^ HEAD -- index.html src/ public/"
-
-# Pin the Node.js version so the build behaves the same as your local machine.
-[build.environment]
-  NODE_VERSION = "20"
+# Security headers for the deployed site
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"

@@ -1,135 +1,164 @@
-# Instructions
+# What Should I...? Project instructions
 
-<!-- Test comment for Husky pre-commit hook -->
-
-This assignment has five parts. Work through them in order. Each part builds on the one before it.
+Build a personalized recommendation tool in a domain you choose.
 
 ---
 
-## Part 1 — Plan your site with your agent
+## Part 1: Choose your domain
 
-Before you touch this repo, you need a plan. You will create that plan in your **original** "What Should I...?" repo — the site you built earlier in the course (e.g., "What Should I Listen To?") — by having a planning conversation with an AI agent.
+Pick a "What should I...?" question that interests you:
 
-1. **You will be closing this repo soon**, but first read through all of Part 1 so you know what to expect.
-2. **Open this gist URL:** `https://gist.github.com/cynthiateeters/b2aa58e6f6c67fb2400309c8543febc5` — this is your planning guide. It walks you through the conversation, model selection, and creating your `BUILD-PROMPT.md`.
-3. **In the other repo**, you will start a Copilot agent conversation and paste something like:
+| Domain     | Question                 | Example criteria          |
+| ---------- | ------------------------ | ------------------------- |
+| Movies     | What should I watch?     | mood, length, genre       |
+| Food       | Where should I eat?      | cuisine, price, distance  |
+| Music      | What should I listen to? | mood, energy, genre       |
+| Games      | What should I play?      | time, players, difficulty |
+| Activities | What should I do?        | weather, energy, cost     |
+| Books      | What should I read?      | length, genre, mood       |
 
-   > "Read this planning guide and help me follow every step: <https://gist.github.com/cynthiateeters/b2aa58e6f6c67fb2400309c8543febc5>"
+You can pick one of these or create your own!
 
-   The agent will read the gist, walk you through the planning conversation, and help you create your `BUILD-PROMPT.md` — all inside the right repo.
-
-4. **When you are done**, bring `BUILD-PROMPT.md` back to this repo (the guide explains how) and continue with Part 2.
-5. **OK, close this repo** and open your original "What Should I...?" repo in VS Code. You have everything you need.
-
----
-
-## Part 2 — Get it running
-
-If you have already cloned this repo and run `npm install`, confirm everything still works and move on. If not, do it now.
-
-> **Before you start**, read [docs/tutorials/dev-tooling-overview.md](tutorials/dev-tooling-overview.md). It explains how all the tools in this repo fit together. You do not need to memorize it — just get the big picture. Come back to it whenever something surprises you.
-
-1. **Clone this repo** and open it in VS Code
-2. **Install dependencies:**
-
-   ```bash
-   npm install
-   ```
-
-   This also installs Husky, which sets up a pre-commit hook automatically.
-3. **Start the dev server:**
-
-   ```bash
-   npm run dev
-   ```
-
-   A placeholder page should appear in the browser. This confirms Vite is working. Your agent will replace this page when you build your site.
-4. **Confirm linting passes:**
-
-   ```bash
-   npm run lint
-   ```
-
-   This should pass with no errors.
-5. **Confirm Husky is working:** Make a small test commit (like editing this file with a comment). When you commit, you should see lint-staged run in your terminal. If it does, Husky is installed correctly. You can revert this commit afterward if you like.
-
-6. **Enable GitHub notifications:** Go to your repo on GitHub, click the **Watch** dropdown (top right), and select **All Activity**. Your instructor delivers weekly updates as Issues and Pull Requests — this ensures you see them. See [docs/course/weekly-updates-how-it-works.md](course/weekly-updates-how-it-works.md) for the full workflow.
-
-Once everything runs without errors, you are ready for Part 3.
+**Deliverable:** Update the `domain` and `description` fields in `data.js`.
 
 ---
 
-## Part 3 — Build the site
+## Part 2: Design your data
 
-Now you will use your build prompt to generate your site inside this repo.
+Create your recommendation data in `data.js`.
 
-1. **Make sure `BUILD-PROMPT.md` is in the root of this repo**
-2. **Open this repo in VS Code agent mode**
-3. **Paste the contents of `BUILD-PROMPT.md`** as your first message to the agent. Tell the agent to **replace** the existing placeholder files (`index.html`, `src/js/app.js`, `src/css/style.css`) with your site — do not append to them.
-4. The agent will generate files:
-   - `index.html` in the repo root (replaces the placeholder)
-   - JavaScript files in `src/js/` (`data.js`, `matching.js`, `app.js`) and CSS in `src/css/`
-5. **Run the linter:**
+### Step 1: Brainstorm with Copilot
 
-   ```bash
-   npm run lint
-   ```
+Ask your AI assistant:
 
-   The agent may have introduced linting errors. Fix them — this is part of the learning. Read the error messages, understand what rule was violated, and check `docs/reference/eslint-rules.md` if you need help.
-6. **Run the dev server:**
+> "What properties should each [your domain item] have for a recommendation system?"
 
-   ```bash
-   npm run dev
-   ```
+Think about what information helps you make a good recommendation.
 
-   Confirm your page loads in the browser and test your form.
+### Step 2: Define your schema
+
+Decide on 4-6 properties for each item. Include:
+
+- A title or name
+- At least one category-type property
+- At least one mood/vibe property
+- At least one numeric property (time, cost, rating, etc.)
+
+### Step 3: Generate sample data
+
+Ask Copilot to generate 10-15 items matching your schema. Then:
+
+1. Review the data for accuracy
+2. Fix any syntax errors (watch for VS Code squiggles!)
+3. Add your personal favorites
+4. Aim for 15-25 total items
+
+### The 4 D's reminder
+
+When working with AI-generated data:
+
+- **Delegation**: Decide what AI does vs. what you verify
+- **Description**: Be specific about your schema requirements
+- **Discernment**: Check if values are accurate or guessed
+- **Diligence**: Take responsibility for the final result
+
+**Deliverable:** `data.js` with 15-25 options following your schema.
 
 ---
 
-## Part 4 — Modify your AGENTS.md
+## Part 3: Write matching functions
 
-Now that you have worked with an AI agent, you know more about what helps and what does not.
+Create functions in `matching.js` that filter your data based on preferences.
 
-1. **Read `docs/a-good-agents-md.md`** — it explains what makes an effective AGENTS.md and how to write personal instructions
-2. **Open `AGENTS.md`** in the repo root and scroll to the "My personal instructions" section at the bottom
-3. **Add at least 3 personal instructions** based on your experience. Think about:
-   - What did the agent do well that you want it to keep doing?
-   - What did the agent do that was unhelpful?
-   - How do you learn best — analogies, short examples, step-by-step?
-   - Any design or code preferences specific to your project?
-4. **Try them out.** Start a short conversation with the agent and see if your instructions change its behavior. Note what is different.
+### Required functions (4 minimum)
+
+| Function type     | JS concepts used         | Example                               |
+| ----------------- | ------------------------ | ------------------------------------- |
+| Single criteria   | Conditionals, comparison | `matchesMood(item, mood)`             |
+| Range check       | Conditionals, operators  | `fitsTimeAvailable(item, maxMinutes)` |
+| Multiple criteria | Logical operators (&&)   | `meetsAllCriteria(item, prefs)`       |
+| Classification    | if/else chains           | `getMatchMessage(score)`              |
+
+### Tips
+
+- Use `if (!value)` to handle "any" or empty selections
+- Return `true` or `false` from matching functions
+- Add JSDoc comments to each function (see [JSDoc basics](tutorials/jsdoc-basics.md))
+- Test your functions in the browser console
+
+**Deliverable:** `matching.js` with 4+ working functions.
 
 ---
 
-## Part 5 — Deploy and reflect
+## Part 4: Connect the UI
 
-Wrap up by building, deploying, and reflecting on the process.
+Wire up your matching functions in `app.js`.
 
-1. **Build the project:**
+### What's already set up
 
-   ```bash
-   npm run build
-   ```
+- Form submission handler
+- `findRecommendations()` function that loops through data
+- `displayRecommendations()` function that shows results
 
-   Confirm Vite builds successfully with no errors.
-2. **Deploy to Netlify using the Netlify CLI.** If you haven't set up the CLI yet, see [docs/reference/cli-tools.md](reference/cli-tools.md) for installation and login steps. If this is your first deploy from this repo, initialize the site first:
+### What you need to customize
 
-   ```bash
-   netlify init
-   ```
+1. Update `findRecommendations()` to use your matching functions
+2. Update `createRecommendationCard()` to display your item properties
+3. Update the category dropdown in `index.html` with your categories
 
-   When prompted, choose "Create & configure a new site" and set the publish directory to `dist`. Then deploy:
+### Testing
 
-   ```bash
-   netlify deploy --prod
-   ```
+1. Open `index.html` in a browser
+2. Try different preference combinations
+3. Check the browser console for errors
 
-   Save your live URL — you will submit it.
-3. **Push to GitHub** and check the Actions tab — confirm the lint workflow runs and shows a green check
-4. **Complete `ai-collaboration-summary-template.md`** — answer every question thoughtfully. This is where you reflect on what you learned about working with AI agents in a real tooling environment.
+**Deliverable:** Working recommendation system in the browser.
 
-## What to submit
+---
 
-- Your live Netlify URL
-- Your GitHub repo URL (make sure it is public or that your instructor has access)
-- Your completed `ai-collaboration-summary-template.md` in the repo
+## Part 5: Document, deploy, and reflect
+
+### Update your README
+
+Edit `README.md` to describe:
+
+- What domain you chose and why
+- How your recommendation logic works
+- Any interesting data you included
+
+### Customize Copilot instructions
+
+Edit `.github/copilot-instructions.md` with:
+
+- Your domain context
+- Naming conventions you're using
+- Any rules specific to your project
+
+### Deploy to Netlify
+
+Put your project on the web! Follow the guide in `docs/guides/deploying-to-netlify.md`:
+
+1. Create a Netlify account (sign up with GitHub)
+2. Import your repository
+3. Deploy with default settings
+4. Test your live site
+5. Add your Netlify URL to your README
+
+### Complete AI collaboration summary
+
+Fill out `ai-collaboration-summary-template.md`:
+
+- What AI helped you create
+- How you verified the results
+- What you learned about AI collaboration
+
+**Deliverables:** Updated README, copilot-instructions, AI summary, and live Netlify URL.
+
+---
+
+## Getting help
+
+- Use `/explain` on code you don't understand
+- Use `@workspace` to find where things are used
+- Use inline chat (`Cmd+I` / `Ctrl+I`) for quick questions
+- Check the guides in `docs/guides/` for detailed help
