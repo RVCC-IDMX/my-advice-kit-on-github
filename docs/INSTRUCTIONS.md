@@ -1,12 +1,8 @@
 # Instructions — Week 2: DOM Fundamentals
 
-**Due:** Thursday, April 2, 2026 at 5:00 PM ET
+<!-- Test comment for Husky pre-commit hook -->
 
-**HAP Learning Lab companion:** [hap-dom.netlify.app](https://hap-dom.netlify.app)
-
-This week you take ownership of the code. In Week 1, an AI agent built your site. This week you read it, understand it, and improve it — by hand.
-
-This assignment has four parts. Work through them in order.
+This assignment has five parts. Work through them in order. Each part builds on the one before it.
 
 ---
 

@@ -1,11 +1,165 @@
 /* Custom properties — use hsl() for all colors */
 :root {
-  --color-text: hsl(220, 15%, 20%);
-  --color-bg: hsl(220, 15%, 97%);
-  --color-accent: hsl(220, 70%, 50%);
+  --color-bg: hsl(0, 0%, 98%);
+  --color-primary: hsl(220, 60%, 40%);
+  --color-secondary: hsl(220, 20%, 20%);
+  --color-accent: hsl(40, 90%, 55%);
+  --color-card: hsl(0, 0%, 100%);
+  --color-border: hsl(220, 20%, 90%);
+  --color-focus: hsl(40, 90%, 55%);
+  --color-text: hsl(220, 20%, 15%);
   --color-muted: hsl(220, 10%, 60%);
+  --radius: 0.75rem;
+  --shadow: 0 2px 8px hsl(220, 20%, 80%, 0.15);
+  --space: 1rem;
 }
 
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header,
+footer {
+  background: var(--color-primary);
+  color: #fff;
+  padding: var(--space);
+  text-align: center;
+}
+
+header h1 {
+  margin: 0 0 0.25em 0;
+  font-size: 2rem;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--space);
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space);
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space);
+  margin-bottom: var(--space);
+}
+
+.form-group {
+  flex: 1 1 200px;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.25em;
+}
+
+select,
+button {
+  font-size: 1rem;
+  padding: 0.5em;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  margin-bottom: 0.5em;
+}
+
+select:focus,
+button:focus {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+button {
+  background: var(--color-accent);
+  color: #222;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button:hover,
+button:focus {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space);
+}
+
+.movie-card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--color-border);
+  padding: var(--space);
+  transition:
+    box-shadow 0.2s,
+    border 0.2s;
+}
+.movie-card:focus {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  border-color: var(--color-focus);
+}
+.movie-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+.movie-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.5em 0;
+}
+.movie-card li {
+  margin-bottom: 0.25em;
+}
+.match-msg {
+  font-weight: bold;
+  color: var(--color-accent);
+}
+
+@media (min-width: 600px) {
+  form {
+    flex-wrap: nowrap;
+    gap: 2rem;
+  }
+  .results {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .movie-card {
+    flex: 1 1 250px;
+    max-width: 300px;
+  }
+}
 /* Reset */
 *,
 *::before,
@@ -17,7 +171,10 @@
 
 /* Base */
 body {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
   color: var(--color-text);
   background-color: var(--color-bg);
   line-height: 1.6;
