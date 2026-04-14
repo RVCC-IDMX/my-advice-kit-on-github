@@ -1,12 +1,10 @@
 # Netlify configuration for static site deployment
 # This file tells Netlify how to deploy your project
 
-[build]
-  # No build command needed - we're serving static files
-  command = ""
 
-  # Publish the root directory
-  publish = "."
+[build]
+  command = "npm run build"
+  publish = "dist"
 
 # Security headers for the deployed site
 [[headers]]
