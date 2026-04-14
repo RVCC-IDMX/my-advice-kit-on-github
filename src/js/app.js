@@ -7,8 +7,9 @@ function getUniqueOptions(key) {
 }
 
 // Populate dropdowns from data
+
 function populateDropdown(id, key) {
-  const select = document.getElementById(id);
+  const select = document.querySelector(`#${id}`);
   const options = getUniqueOptions(key);
   options.forEach((value) => {
     const opt = document.createElement('option');
@@ -24,8 +25,9 @@ populateDropdown('energy', 'energy');
 populateDropdown('era', 'era');
 
 // Handle form submission
-const form = document.getElementById('movie-form');
-const resultsDiv = document.getElementById('results');
+
+const form = document.querySelector('#movie-form');
+const resultsDiv = document.querySelector('#results');
 
 form.addEventListener('submit', function (e) {
   e.preventDefault();
@@ -60,17 +62,43 @@ function renderResults(moviesWithScores) {
     const card = document.createElement('div');
     card.className = 'movie-card';
     card.tabIndex = 0;
-    card.innerHTML = `
-      <h3>${movie.title}</h3>
-      <ul>
-        <li><strong>Genre:</strong> ${movie.category}</li>
-        <li><strong>Mood:</strong> ${movie.mood}</li>
-        <li><strong>Time:</strong> ${movie.timeMinutes} min</li>
-        <li><strong>Energy:</strong> ${movie.energy}</li>
-        <li><strong>Era:</strong> ${movie.era}</li>
-      </ul>
-      <p class="match-msg">${getMovieMatchMessage(score)}</p>
-    `;
+
+    // Title
+    const title = document.createElement('h3');
+    title.textContent = movie.title;
+    card.appendChild(title);
+
+    // Details list
+    const ul = document.createElement('ul');
+
+    const genreLi = document.createElement('li');
+    genreLi.innerHTML = '<strong>Genre:</strong> ' + movie.category;
+    ul.appendChild(genreLi);
+
+    const moodLi = document.createElement('li');
+    moodLi.innerHTML = '<strong>Mood:</strong> ' + movie.mood;
+    ul.appendChild(moodLi);
+
+    const timeLi = document.createElement('li');
+    timeLi.innerHTML = '<strong>Time:</strong> ' + movie.timeMinutes + ' min';
+    ul.appendChild(timeLi);
+
+    const energyLi = document.createElement('li');
+    energyLi.innerHTML = '<strong>Energy:</strong> ' + movie.energy;
+    ul.appendChild(energyLi);
+
+    const eraLi = document.createElement('li');
+    eraLi.innerHTML = '<strong>Era:</strong> ' + movie.era;
+    ul.appendChild(eraLi);
+
+    card.appendChild(ul);
+
+    // Match message
+    const matchMsg = document.createElement('p');
+    matchMsg.className = 'match-msg';
+    matchMsg.textContent = getMovieMatchMessage(score);
+    card.appendChild(matchMsg);
+
     resultsDiv.appendChild(card);
   });
 }
