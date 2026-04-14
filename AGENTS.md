@@ -2,7 +2,9 @@
 
 ## About this student
 
-JavaScript student, post-midterm. Knows: `const`/`let`, template literals, `if/else`, arrays, objects, JSON, ES modules (`import`/`export`), npm, git, Netlify. Has NOT done DOM, async, or APIs yet.
+JavaScript student, post-midterm. Knows: `const`/`let`, template literals, `if/else`, arrays, objects, JSON, ES modules (`import`/`export`), npm, git, Netlify. 
+
+Now confident with: DOM manipulation using `querySelector`, `addEventListener`, `textContent`, `classList`, `createElement`, and `appendChild`. Understands the importance of safe DOM updates (avoiding `innerHTML` for dynamic content) and prefers modern, flexible selectors. Has NOT done async or APIs yet.
 
 ## How to help
 
@@ -61,9 +63,12 @@ src/css/style.css    ← all styles
 ## My personal instructions
 
 
+
 1. When explaining a new concept, give a short analogy or real-world example before showing code.
 2. If I make a mistake, explain what was wrong and point me to the relevant doc in docs/ or a specific file in my repo.
 3. I learn best with step-by-step explanations and short, runnable code snippets—not long blocks of code.
+4. Always use `querySelector` (with CSS selectors) instead of `getElementById` for finding elements in the DOM.
+5. Never use `innerHTML` to build dynamic content from data—use `createElement` and `textContent` for safety.
 
 # Reflection-based instructions
 
