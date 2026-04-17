@@ -44,4 +44,4 @@ This project encourages AI-assisted development. Document your AI usage in `ai-c
 
 ## License
 
-MIT License (Cynthia Teeters)
+MIT License (Cynthia Teeters) & Kaitlin Taylor
