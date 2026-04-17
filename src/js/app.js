@@ -26,31 +26,33 @@ populateDropdown('era', 'era');
 
 // Handle form submission
 
-const form = document.querySelector('#movie-form');
+const form = document.querySelector('#preference-form');
 const resultsDiv = document.querySelector('#results');
 
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  const preferences = {
-    mood: form.mood.value,
-    category: form.category.value,
-    energy: form.energy.value,
-    era: form.era.value,
-    maxTime: form.time.value ? Number(form.time.value) : undefined,
-  };
+if (form) {
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const preferences = {
+      mood: form.mood.value,
+      category: form.category.value,
+      energy: form.energy.value,
+      era: form.era.value,
+      maxTime: form.time.value ? Number(form.time.value) : undefined,
+    };
 
-  // Filter and score movies
-  const moviesWithScores = data.options
-    .map((movie) => ({
-      movie,
-      score: calculateMatchScore(movie, preferences),
-    }))
-    .filter(({ score }) => score > 0)
-    .sort((a, b) => b.score - a.score);
+    // Filter and score movies
+    const moviesWithScores = data.options
+      .map((movie) => ({
+        movie,
+        score: calculateMatchScore(movie, preferences),
+      }))
+      .filter(({ score }) => score > 0)
+      .sort((a, b) => b.score - a.score);
 
-  // Render results
-  renderResults(moviesWithScores);
-});
+    // Render results
+    renderResults(moviesWithScores);
+  });
+}
 
 function renderResults(moviesWithScores) {
   resultsDiv.innerHTML = '';
