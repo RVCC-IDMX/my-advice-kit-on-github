@@ -68,7 +68,11 @@ src/css/style.css    ← all styles
 2. If I make a mistake, explain what was wrong and point me to the relevant doc in docs/ or a specific file in my repo.
 3. I learn best with step-by-step explanations and short, runnable code snippets—not long blocks of code.
 4. Always use `querySelector` (with CSS selectors) instead of `getElementById` for finding elements in the DOM.
-5. Never use `innerHTML` to build dynamic content from data—use `createElement` and `textContent` for safety.
+
+6. Use event delegation: add one event listener to the results container and use `.closest('.movie-card')` to handle card clicks.
+7. Always use named callback functions for event handlers, not anonymous inline functions.
+8. Extract all DOM rendering logic into `views.js` as exported functions; import and call them from `app.js`.
+9. Hide and show views using a `.hidden` class, not inline styles.
 
 # Reflection-based instructions
 
