@@ -10,54 +10,67 @@ For each file, write one sentence about what it does.
 
 | File                    | What it does |
 | ----------------------- | ------------ |
-| `src/js/app.js`         |              |
-| `src/js/matching.js`    |              |
-| `src/js/data.js`        |              |
-| `src/js/experiments.js` |              |
-| `src/css/style.css`     |              |
-| `index.html`            |              |
+| `src/js/app.js`         | Main app logic: handles form, event delegation, and view wiring |
+| `src/js/matching.js`    | Matching/filtering logic for recommendations |
+| `src/js/data.js`        | Movie dataset and options |
+| `src/js/experiments.js` | (Deleted; was for experiments, now removed) |
+| `src/css/style.css`     | All CSS styles for layout, colors, and cards |
+| `index.html`            | Main HTML structure, form, and containers |
 
 ---
 
 ## Form
 
+
 Look at your `index.html` and find the form element.
 
-- Form ID: `#___________`
-- Select element ID: `#___________`
+- Form ID: `#preference-form`
+- Select element ID: `#mood`, `#category`, `#energy`, `#era`, `#time`
 
 - What moods/options are in the select?
 
-  -
-  -
-  -
+  - Any mood
+  - Happy
+  - Sad
+  - Inspiring
+  - Tense
+  - Romantic
+  - Adventurous
 
 ---
 
 ## Results container
 
+
 Where do results appear on the page?
 
-- Container ID or class: `___________`
-- What element type is it? (`div`, `section`, etc.): `___________`
+- Container ID or class: `#results` (section), `.results` (class)
+- What element type is it? (`div`, `section`, etc.): `section` (with a child div for cards)
 
 ---
 
 ## Card structure
 
+
 Look at how your app.js builds each result card. What elements make up one card?
 
-- Card element type: `___________`
-- Card class name: `___________`
+- Card element type: `div`
+- Card class name: `movie-card`
 
 - What is inside each card? (list the child elements and what data they show)
-  -
+  - h3: Movie title
+  - ul > li: Genre, Mood, Time, Energy, Era
+  - p.match-msg: Match message
 
 ---
 
 ## Existing event listeners
 
+
 Look through your app.js for any `addEventListener` calls. List each one.
+
+  - form (`#preference-form`): 'submit' event, handled by handleFormSubmit
+  - resultsDiv (`#results`): 'click' event, handled by handleCardClick (event delegation for .movie-card)
 
 | Where in the code | Event type | What it does |
 | ----------------- | ---------- | ------------ |
