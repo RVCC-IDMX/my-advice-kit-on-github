@@ -4,39 +4,45 @@ Answer each question thoughtfully. There are no wrong answers — the goal is to
 
 ---
 
+
 ## 1. The enforcement ladder
 
-What did the new linter (ESLint 9 + unicorn plugin) catch that your AGENTS.md rules alone didn't prevent? On the flip side, what kinds of things can AGENTS.md catch that a linter can't check for?
+The new linter (ESLint 9 + unicorn plugin) caught unsafe DOM methods, missing error handling, and required defensive coding that AGENTS.md alone didn’t enforce. AGENTS.md can catch project-specific rules and best practices that a linter can’t check automatically.
 
 ---
+
 
 ## 2. Hooks across contexts
 
-You've now seen hooks in five places: browser events, Git pre-commit, npm lifecycle scripts, GitHub Actions, and serverless functions. What is the common pattern across all of them?
+The common pattern is that hooks run code automatically at key moments (like saving, committing, deploying, or handling requests) to enforce rules, automate checks, or trigger actions.
 
 ---
+
 
 ## 3. Which enforcement layer changed your habits
 
-Advisory (AGENTS.md), linting (ESLint + unicorn), or blocking (pre-commit hook) — which one changed how you write code the most this week? Why?
+Linting (ESLint + unicorn) changed my habits the most, because it blocked unsafe code and forced me to fix issues before committing.
 
 ---
+
 
 ## 4. The data swap
 
-What surprised you about working with a real API compared to your static `data.js`? Think about things like response shape, timing, missing fields, or error cases.
+I was surprised by how often API data was missing fields or had a different shape than my static data.js. I had to add defensive checks and handle loading/error states.
 
 ---
+
 
 ## 5. The transform challenge
 
-What was the hardest part of mapping the API response to the shape your views expect? How did you solve it?
+The hardest part was mapping TMDB’s response to my app’s expected shape, especially for fields that didn’t exist (like genre or mood). I solved it by providing defaults or omitting those fields.
 
 ---
 
+
 ## 6. New API fields
 
-What new field(s) did you add from the API? How did they improve your app compared to the static version?
+I added overview and poster from the API. These made the app feel more real and visually appealing compared to the static version.
 
 ---
 

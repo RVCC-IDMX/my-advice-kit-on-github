@@ -2,80 +2,169 @@
 
 // Show results: builds cards for each movie
 export function showResults(moviesWithScores, container, getMovieMatchMessage) {
-  container.innerHTML = '';
+  // Remove all children
+  while (container.firstChild) {
+    container.firstChild.remove();
+  }
   if (moviesWithScores.length === 0) {
     showNoResults(container);
     return;
   }
-  moviesWithScores.forEach(({ movie, score }) => {
+  for (const { movie, score } of moviesWithScores) {
     const card = document.createElement('div');
     card.className = 'movie-card';
     card.tabIndex = 0;
 
+    // Poster image (TMDB)
+    if (movie.poster) {
+      const img = document.createElement('img');
+      img.src = movie.poster;
+      img.alt = `${movie.title} poster`;
+      img.className = 'movie-poster';
+      card.append(img);
+    }
+
     // Title
     const title = document.createElement('h3');
     title.textContent = movie.title;
-    card.appendChild(title);
+    card.append(title);
 
     // Details list
     const ul = document.createElement('ul');
 
+    // Genre
     const genreLi = document.createElement('li');
-    genreLi.innerHTML = '<strong>Genre:</strong> ' + movie.category;
-    ul.appendChild(genreLi);
+    const genreStrong = document.createElement('strong');
+    genreStrong.textContent = 'Genre:';
+    genreLi.append(genreStrong, ' ', movie.category);
+    ul.append(genreLi);
 
+    // Mood
     const moodLi = document.createElement('li');
-    moodLi.innerHTML = '<strong>Mood:</strong> ' + movie.mood;
-    ul.appendChild(moodLi);
+    const moodStrong = document.createElement('strong');
+    moodStrong.textContent = 'Mood:';
+    moodLi.append(moodStrong, ' ', movie.mood);
+    ul.append(moodLi);
 
+    // Time
     const timeLi = document.createElement('li');
-    timeLi.innerHTML = '<strong>Time:</strong> ' + movie.timeMinutes + ' min';
-    ul.appendChild(timeLi);
+    const timeStrong = document.createElement('strong');
+    timeStrong.textContent = 'Time:';
+    timeLi.append(timeStrong, ' ', `${movie.timeMinutes} min`);
+    ul.append(timeLi);
 
+    // Energy
     const energyLi = document.createElement('li');
-    energyLi.innerHTML = '<strong>Energy:</strong> ' + movie.energy;
-    ul.appendChild(energyLi);
+    const energyStrong = document.createElement('strong');
+    energyStrong.textContent = 'Energy:';
+    energyLi.append(energyStrong, ' ', movie.energy);
+    ul.append(energyLi);
 
+    // Era
     const eraLi = document.createElement('li');
-    eraLi.innerHTML = '<strong>Era:</strong> ' + movie.era;
-    ul.appendChild(eraLi);
+    const eraStrong = document.createElement('strong');
+    eraStrong.textContent = 'Era:';
+    eraLi.append(eraStrong, ' ', movie.era);
+    ul.append(eraLi);
 
-    card.appendChild(ul);
+    card.append(ul);
+
+    // Overview (TMDB)
+    if (movie.overview) {
+      const overview = document.createElement('p');
+      overview.className = 'movie-overview';
+      overview.textContent = movie.overview;
+      card.append(overview);
+    }
 
     // Match message
     const matchMsg = document.createElement('p');
     matchMsg.className = 'match-msg';
     matchMsg.textContent = getMovieMatchMessage(score);
-    card.appendChild(matchMsg);
+    card.append(matchMsg);
 
-    container.appendChild(card);
-  });
+    container.append(card);
+  }
 }
 
 // Show no results message
 export function showNoResults(container) {
-  container.innerHTML = 'No movies found. Try changing your preferences.';
+  // Remove all children
+  while (container.firstChild) {
+    container.firstChild.remove();
+  }
+  const msg = document.createElement('p');
+  msg.textContent = 'No movies found. Try changing your preferences.';
+  container.append(msg);
 }
 
 // Show detail view for a single movie
 export function showDetail(movie, container, onBack) {
-  container.innerHTML = '';
+  // Remove all children
+  while (container.firstChild) {
+    container.firstChild.remove();
+  }
   const card = document.createElement('div');
   card.className = 'movie-card';
 
+  // Poster image (TMDB)
+  if (movie.poster) {
+    const img = document.createElement('img');
+    img.src = movie.poster;
+    img.alt = `${movie.title} poster`;
+    img.className = 'movie-poster';
+    card.append(img);
+  }
+
   const title = document.createElement('h3');
   title.textContent = movie.title;
-  card.appendChild(title);
+  card.append(title);
+  // Overview (TMDB)
+  if (movie.overview) {
+    const overview = document.createElement('p');
+    overview.className = 'movie-overview';
+    overview.textContent = movie.overview;
+    card.append(overview);
+  }
 
   const ul = document.createElement('ul');
-  ul.innerHTML = `
-    <li><strong>Genre:</strong> ${movie.category}</li>
-    <li><strong>Mood:</strong> ${movie.mood}</li>
-    <li><strong>Time:</strong> ${movie.timeMinutes} min</li>
-    <li><strong>Energy:</strong> ${movie.energy}</li>
-    <li><strong>Era:</strong> ${movie.era}</li>
-  `;
-  card.appendChild(ul);
+
+  // Genre
+  const genreLi = document.createElement('li');
+  const genreStrong = document.createElement('strong');
+  genreStrong.textContent = 'Genre:';
+  genreLi.append(genreStrong, ' ', movie.category);
+  ul.append(genreLi);
+
+  // Mood
+  const moodLi = document.createElement('li');
+  const moodStrong = document.createElement('strong');
+  moodStrong.textContent = 'Mood:';
+  moodLi.append(moodStrong, ' ', movie.mood);
+  ul.append(moodLi);
+
+  // Time
+  const timeLi = document.createElement('li');
+  const timeStrong = document.createElement('strong');
+  timeStrong.textContent = 'Time:';
+  timeLi.append(timeStrong, ' ', `${movie.timeMinutes} min`);
+  ul.append(timeLi);
+
+  // Energy
+  const energyLi = document.createElement('li');
+  const energyStrong = document.createElement('strong');
+  energyStrong.textContent = 'Energy:';
+  energyLi.append(energyStrong, ' ', movie.energy);
+  ul.append(energyLi);
+
+  // Era
+  const eraLi = document.createElement('li');
+  const eraStrong = document.createElement('strong');
+  eraStrong.textContent = 'Era:';
+  eraLi.append(eraStrong, ' ', movie.era);
+  ul.append(eraLi);
+
+  card.append(ul);
 
   // Back button
   const backBtn = document.createElement('button');
@@ -85,7 +174,7 @@ export function showDetail(movie, container, onBack) {
     e.preventDefault();
     if (onBack) onBack();
   });
-  card.appendChild(backBtn);
+  card.append(backBtn);
 
-  container.appendChild(card);
+  container.append(card);
 }

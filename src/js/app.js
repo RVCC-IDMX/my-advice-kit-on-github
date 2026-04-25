@@ -1,32 +1,32 @@
 // Store last results for detail view navigation
 let lastMoviesWithScores = [];
 
-import { data } from './data.js';
-import { calculateMatchScore, getMovieMatchMessage } from './matching.js';
-import { showResults, showDetail } from './views.js';
-// Utility to get unique values for dropdowns
-function getUniqueOptions(key) {
-  const values = data.options.map((movie) => movie[key]);
-  return Array.from(new Set(values));
+// --- Safe localStorage cache helpers ---
+function loadCache(key) {
+  try {
+    const saved = localStorage.getItem(key);
+    if (!saved) return null;
+    const parsed = JSON.parse(saved);
+    if (!Array.isArray(parsed)) return null;
+    return parsed;
+  } catch {
+    localStorage.removeItem(key);
+    return null;
+  }
 }
 
-// Populate dropdowns from data
-
-function populateDropdown(id, key) {
-  const select = document.querySelector(`#${id}`);
-  const options = getUniqueOptions(key);
-  options.forEach((value) => {
-    const opt = document.createElement('option');
-    opt.value = value;
-    opt.textContent = value.charAt(0).toUpperCase() + value.slice(1);
-    select.appendChild(opt);
-  });
+function saveCache(key, data) {
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch {
+    /* quota exceeded or private browsing — safe to ignore */
+  }
 }
 
-populateDropdown('mood', 'mood');
-populateDropdown('category', 'category');
-populateDropdown('energy', 'energy');
-populateDropdown('era', 'era');
+import { getMovieMatchMessage } from './matching.js';
+import { showResults, showDetail, showNoResults } from './views.js';
+
+// (Optional) Populate dropdowns with static values or fetch genres from API if needed
 
 // Handle form submission
 
@@ -37,26 +37,45 @@ if (form) {
   form.addEventListener('submit', handleFormSubmit);
 }
 
-function handleFormSubmit(e) {
+async function handleFormSubmit(e) {
   e.preventDefault();
-  const preferences = {
-    mood: form.mood.value,
-    category: form.category.value,
-    energy: form.energy.value,
-    era: form.era.value,
-    maxTime: form.time.value ? Number(form.time.value) : undefined,
-  };
+  const search =
+    form.querySelector('input[name="search"]')?.value ||
+    form.mood.value ||
+    'movie';
+  const cacheKey = `movies:${search.toLowerCase()}`;
+  resultsDiv.textContent = 'Loading...';
 
-  // Filter and score movies
-  lastMoviesWithScores = data.options
-    .map((movie) => ({
-      movie,
-      score: calculateMatchScore(movie, preferences),
-    }))
-    .filter(({ score }) => score > 0)
-    .sort((a, b) => b.score - a.score);
+  // 1. Try cache first
+  const cached = loadCache(cacheKey);
+  if (cached && cached.length > 0) {
+    lastMoviesWithScores = cached;
+    showResults(lastMoviesWithScores, resultsDiv, getMovieMatchMessage);
+    return;
+  }
 
-  showResults(lastMoviesWithScores, resultsDiv, getMovieMatchMessage);
+  // 2. Fetch from API if not cached
+  try {
+    const response = await fetch(
+      `/.netlify/functions/api?query=${encodeURIComponent(search)}`
+    );
+    if (!response.ok) {
+      throw new Error('API request failed');
+    }
+    const data = await response.json();
+    if (!data.movies || data.movies.length === 0) {
+      showNoResults(resultsDiv);
+      lastMoviesWithScores = [];
+      return;
+    }
+    // No scoring, just pass movies as-is for now
+    lastMoviesWithScores = data.movies.map((movie) => ({ movie, score: 1 }));
+    // 3. Save to cache
+    saveCache(cacheKey, lastMoviesWithScores);
+    showResults(lastMoviesWithScores, resultsDiv, getMovieMatchMessage);
+  } catch {
+    resultsDiv.textContent = 'Error loading movies. Please try again.';
+  }
 }
 
 // Event delegation for card clicks
