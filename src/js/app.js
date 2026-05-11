@@ -39,11 +39,19 @@ if (form) {
 
 async function handleFormSubmit(e) {
   e.preventDefault();
-  const search =
-    form.querySelector('input[name="search"]')?.value ||
-    form.mood.value ||
-    'movie';
-  const cacheKey = `movies:${search.toLowerCase()}`;
+  // Gather all form fields for a unique cache key
+  const searchParams = {
+    search: form.querySelector('input[name="search"]')?.value || '',
+    mood: form.mood.value || '',
+    time: form.time.value || '',
+    category: form.category.value || '',
+    energy: form.energy.value || '',
+    era: form.era.value || '',
+  };
+  // Create a stable, unique cache key for all fields
+  const cacheKey = `movies:${Object.entries(searchParams)
+    .map(([k, v]) => `${k}=${v.toLowerCase()}`)
+    .join('&')}`;
   resultsDiv.textContent = 'Loading...';
 
   // 1. Try cache first
@@ -56,8 +64,9 @@ async function handleFormSubmit(e) {
 
   // 2. Fetch from API if not cached
   try {
+    // Only pass the main search field to the API for now
     const response = await fetch(
-      `/.netlify/functions/api?query=${encodeURIComponent(search)}`
+      `/.netlify/functions/api?query=${encodeURIComponent(searchParams.search || searchParams.mood || 'movie')}`
     );
     if (!response.ok) {
       throw new Error('API request failed');

@@ -2,9 +2,9 @@
 
 ## About this student
 
-JavaScript student, post-midterm. Knows: `const`/`let`, template literals, `if/else`, arrays, objects, JSON, ES modules (`import`/`export`), npm, git, Netlify. 
+JavaScript student, post-midterm. Knows: `const`/`let`, template literals, `if/else`, arrays, objects, JSON, ES modules (`import`/`export`), npm, git, Netlify, async/await, fetch, and APIs.
 
-Now confident with: DOM manipulation using `querySelector`, `addEventListener`, `textContent`, `classList`, `createElement`, and `appendChild`. Understands the importance of safe DOM updates (avoiding `innerHTML` for dynamic content) and prefers modern, flexible selectors. Has NOT done async or APIs yet.
+Now confident with: DOM manipulation using `querySelector`, `addEventListener`, `textContent`, `classList`, `createElement`, and `appendChild`. Understands the importance of safe DOM updates (avoiding `innerHTML` for dynamic content) and prefers modern, flexible selectors. Has implemented async/await, fetch, and API integration (TMDB) in serverless and client code.
 
 ## How to help
 
@@ -22,7 +22,8 @@ Now confident with: DOM manipulation using `querySelector`, `addEventListener`, 
 - `const` by default; `let` only when reassignment needed; never `var`
 - `textContent` for user input in DOM; `innerHTML` only for hardcoded template literals
 - No `eval()`; `console.log` is allowed for debugging during development
-- No `fetch()`, `async`, `await`, or Promises — all data must come from the local `data.js` array
+- Use `fetch()`, `async`, and `await` for API calls and serverless functions
+- Data may come from APIs, serverless functions, or local `data.js` as a fallback
 - Logic functions (filtering, matching, data) must not touch the DOM — keep them testable
 
 ### HTML
