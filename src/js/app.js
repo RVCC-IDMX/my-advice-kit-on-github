@@ -39,19 +39,15 @@ if (form) {
 
 async function handleFormSubmit(e) {
   e.preventDefault();
-  // Gather all form fields for a unique cache key
-  const searchParams = {
-    search: form.querySelector('input[name="search"]')?.value || '',
-    mood: form.mood.value || '',
-    time: form.time.value || '',
-    category: form.category.value || '',
-    energy: form.energy.value || '',
-    era: form.era.value || '',
-  };
-  // Create a stable, unique cache key for all fields
-  const cacheKey = `movies:${Object.entries(searchParams)
-    .map(([k, v]) => `${k}=${v.toLowerCase()}`)
-    .join('&')}`;
+  // Read the free-text input for Pattern A
+  const queryInput = form.querySelector('input[name="movie-query"]');
+  const userQuery = queryInput ? queryInput.value.trim() : '';
+  if (!userQuery) {
+    resultsDiv.textContent = 'Please describe the kind of movie you want.';
+    return;
+  }
+  // Use the query as the cache key
+  const cacheKey = `movies:query=${userQuery.toLowerCase()}`;
   resultsDiv.textContent = 'Loading...';
 
   // 1. Try cache first
@@ -64,14 +60,70 @@ async function handleFormSubmit(e) {
 
   // 2. Fetch from API if not cached
   try {
-    // Only pass the main search field to the API for now
     const response = await fetch(
-      `/.netlify/functions/api?query=${encodeURIComponent(searchParams.search || searchParams.mood || 'movie')}`
+      `/.netlify/functions/api?q=${encodeURIComponent(userQuery)}`
     );
+    const data = await response.json();
+
+    // Helper to clear and append a message safely
+    function showMessage(className, icon, message, detail) {
+      while (resultsDiv.firstChild) resultsDiv.firstChild.remove();
+      const div = document.createElement('div');
+      div.className = className;
+      div.setAttribute('role', 'alert');
+      div.tabIndex = 0;
+      const iconSpan = document.createElement('span');
+      iconSpan.textContent = `${icon} `;
+      div.append(iconSpan);
+      const msgSpan = document.createElement('span');
+      msgSpan.textContent = message;
+      div.append(msgSpan);
+      if (detail) {
+        const detailSpan = document.createElement('span');
+        detailSpan.className = 'error-detail';
+        detailSpan.textContent = detail;
+        div.append(document.createElement('br'));
+        div.append(detailSpan);
+      }
+      resultsDiv.append(div);
+    }
+
+    // Show refusal message if refused flag is set
+    if (data.refused && data.refusal_reason) {
+      showMessage('refusal-message', '⚠️', data.refusal_reason);
+      return;
+    }
+    // Show input validation errors
+    if (
+      data.error &&
+      (data.error === 'Missing input' || data.error === 'Input too long')
+    ) {
+      showMessage('refusal-message', '⚠️', data.error);
+      return;
+    }
+    // Show Groq API error
+    if (data.error && data.error.includes('Groq API error')) {
+      showMessage(
+        'ai-error-message',
+        '🤖',
+        'Sorry, there was a problem with the AI service. Please try again later.',
+        data.error
+      );
+      return;
+    }
+    // Show network/server error
+    if (data.error && data.error.includes('Network/server error')) {
+      showMessage(
+        'network-error-message',
+        '❌',
+        'Network error. Please check your connection and try again.'
+      );
+      return;
+    }
+
     if (!response.ok) {
       throw new Error('API request failed');
     }
-    const data = await response.json();
     if (!data.movies || data.movies.length === 0) {
       showNoResults(resultsDiv);
       lastMoviesWithScores = [];
