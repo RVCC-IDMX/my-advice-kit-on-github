@@ -1,3 +1,4 @@
+# See README for architecture, usage, and moderation details.
 # Final project — checklist
 
 Tick each item as you ship it. Items in the **Optional ceiling** section are not required.

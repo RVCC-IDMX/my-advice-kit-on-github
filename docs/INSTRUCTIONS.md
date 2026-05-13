@@ -1,3 +1,7 @@
+# Project implementation note (2026)
+
+This project implements **Pattern A** using TMDB and Groq. User input is translated to TMDB parameters via a serverless function (`netlify/functions/api.mjs`) with a four-layer moderation floor (system prompt, JSON mode, delimited input, length cap). All errors and refusals are handled with accessible UI in `views.js`. See the [README](../README.md) for usage, architecture, and accessibility details.
+
 # Final project — your Groq integration
 
 > [!NOTE]

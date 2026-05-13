@@ -1,3 +1,4 @@
+# See README and netlify/functions/api.mjs for a live implementation example in this project.
 # The Groq moderation floor — four required layers
 
 Any time user input flows into an LLM whose output renders to a page, you need defenses. The four layers below are the _required floor_ for the final project. None of the four alone is enough; the combination is defensive in depth.

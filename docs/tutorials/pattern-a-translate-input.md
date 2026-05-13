@@ -1,3 +1,4 @@
+# Note: This project uses TMDB, not Open Library. See README and netlify/functions/api.mjs for your schema and prompt.
 # Pattern A — translate user input into API parameters
 
 > [!NOTE]
