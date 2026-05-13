@@ -24,7 +24,13 @@ function saveCache(key, data) {
 }
 
 import { getMovieMatchMessage } from './matching.js';
-import { showResults, showDetail, showNoResults } from './views.js';
+import {
+  showResults,
+  showDetail,
+  showNoResults,
+  showMessage,
+  showLoading,
+} from './views.js';
 
 // (Optional) Populate dropdowns with static values or fetch genres from API if needed
 
@@ -48,7 +54,7 @@ async function handleFormSubmit(e) {
   }
   // Use the query as the cache key
   const cacheKey = `movies:query=${userQuery.toLowerCase()}`;
-  resultsDiv.textContent = 'Loading...';
+  showLoading(resultsDiv);
 
   // 1. Try cache first
   const cached = loadCache(cacheKey);
@@ -65,32 +71,10 @@ async function handleFormSubmit(e) {
     );
     const data = await response.json();
 
-    // Helper to clear and append a message safely
-    function showMessage(className, icon, message, detail) {
-      while (resultsDiv.firstChild) resultsDiv.firstChild.remove();
-      const div = document.createElement('div');
-      div.className = className;
-      div.setAttribute('role', 'alert');
-      div.tabIndex = 0;
-      const iconSpan = document.createElement('span');
-      iconSpan.textContent = `${icon} `;
-      div.append(iconSpan);
-      const msgSpan = document.createElement('span');
-      msgSpan.textContent = message;
-      div.append(msgSpan);
-      if (detail) {
-        const detailSpan = document.createElement('span');
-        detailSpan.className = 'error-detail';
-        detailSpan.textContent = detail;
-        div.append(document.createElement('br'));
-        div.append(detailSpan);
-      }
-      resultsDiv.append(div);
-    }
-
     // Show refusal message if refused flag is set
     if (data.refused && data.refusal_reason) {
-      showMessage('refusal-message', '⚠️', data.refusal_reason);
+      showMessage(resultsDiv, 'refusal-message', '⚠️', data.refusal_reason);
+      queryInput && queryInput.focus();
       return;
     }
     // Show input validation errors
@@ -98,26 +82,31 @@ async function handleFormSubmit(e) {
       data.error &&
       (data.error === 'Missing input' || data.error === 'Input too long')
     ) {
-      showMessage('refusal-message', '⚠️', data.error);
+      showMessage(resultsDiv, 'refusal-message', '⚠️', data.error);
+      queryInput && queryInput.focus();
       return;
     }
     // Show Groq API error
     if (data.error && data.error.includes('Groq API error')) {
       showMessage(
+        resultsDiv,
         'ai-error-message',
         '🤖',
         'Sorry, there was a problem with the AI service. Please try again later.',
         data.error
       );
+      queryInput && queryInput.focus();
       return;
     }
     // Show network/server error
     if (data.error && data.error.includes('Network/server error')) {
       showMessage(
+        resultsDiv,
         'network-error-message',
         '❌',
         'Network error. Please check your connection and try again.'
       );
+      queryInput && queryInput.focus();
       return;
     }
 

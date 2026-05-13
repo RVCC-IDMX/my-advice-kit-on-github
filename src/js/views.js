@@ -1,3 +1,42 @@
+// Show a loading spinner or message
+export function showLoading(container) {
+  while (container.firstChild) container.firstChild.remove();
+  const div = document.createElement('div');
+  div.className = 'loading-message';
+  div.setAttribute('role', 'status');
+  div.tabIndex = 0;
+  const spinner = document.createElement('span');
+  spinner.className = 'spinner';
+  spinner.setAttribute('aria-hidden', 'true');
+  spinner.textContent = '⏳';
+  div.append(spinner);
+  const msgSpan = document.createElement('span');
+  msgSpan.textContent = ' Loading...';
+  div.append(msgSpan);
+  container.append(div);
+}
+// Show error/refusal/AI/network messages in a11y-safe way
+export function showMessage(container, className, icon, message, detail) {
+  while (container.firstChild) container.firstChild.remove();
+  const div = document.createElement('div');
+  div.className = className;
+  div.setAttribute('role', 'alert');
+  div.tabIndex = 0;
+  const iconSpan = document.createElement('span');
+  iconSpan.textContent = `${icon} `;
+  div.append(iconSpan);
+  const msgSpan = document.createElement('span');
+  msgSpan.textContent = message;
+  div.append(msgSpan);
+  if (detail) {
+    const detailSpan = document.createElement('span');
+    detailSpan.className = 'error-detail';
+    detailSpan.textContent = detail;
+    div.append(document.createElement('br'));
+    div.append(detailSpan);
+  }
+  container.append(div);
+}
 // views.js — View functions for movie recommender
 
 // Show results: builds cards for each movie

@@ -1,3 +1,27 @@
+/* Loading spinner/message styling */
+.loading-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 1.1em;
+  color: var(--color-primary);
+  background: var(--color-card);
+  border-radius: var(--radius);
+  padding: 0.75em 1em;
+  margin: 1em 0;
+}
+.spinner {
+  font-size: 1.5em;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 /* Refusal message styling for moderation floor feedback */
 .refusal-message {
   background: #fffbe6;
